@@ -4,8 +4,9 @@ import { Context, Env } from 'hono'
 
 type Callback<T, E extends Env> = (c: Context<E>) => T
 
+const localStorage = new AsyncLocalStorage<T>()
+
 export const asyncLocalStorage = <T>() => {
-  const localStorage = new AsyncLocalStorage<T>()
   return {
     store: <E extends Env = Env>(callback: Callback<T, E>) =>
       createMiddleware(async (c, next) => {
